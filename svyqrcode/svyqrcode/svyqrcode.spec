@@ -8,10 +8,11 @@
 	],
 	"model":
 	{
-		"dataProviderID" 		: { "type": "dataprovider", "pushToServer": "allow","tags": { "scope" :"design" }, "ondatachange": { "onchange":"onDataChangeMethodID"}},
-		"showCodeFrame"			: { "type": "boolean", "default": true },
-		"codeFrameColor"		: { "type": "color", "default": "#FF3B58" },
-		"size" 					: { "type": "dimension", "default" : {"width":640, "height":480}}
+		"dataProviderID" 			: { "type": "dataprovider", "pushToServer": "allow", "tags": { "scope" :"design" }},
+		"showCodeFrame"				: { "type": "boolean", "default": true },
+		"codeFrameColor"			: { "type": "color", "default": "#FF3B58" },
+		"size" 						: { "type": "dimension", "default" : {"width":640, "height":480}},
+		"callbackMethodTimeout"		: { "type": "int", "default": 1000, "tags": { "scope" :"design" } }
 	},
 	"handlers": 
 	{

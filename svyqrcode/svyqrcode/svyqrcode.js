@@ -13,7 +13,11 @@ angular.module('svyqrcodeSvyqrcode', ['servoy']).directive('svyqrcodeSvyqrcode',
 				var video = document.createElement('video');
 				var canvasElement = $element.find('canvas')[0];
 				var canvas = canvasElement.getContext("2d");
-				var lastCodeDetected;
+				
+				var methodLastFired;
+				var jsEvent = $utils.createJSEvent({target: canvasElement}, 'codeDetected');
+				
+				var methodTimeout = $scope.model.callbackMethodTimeout >= 0 ? $scope.model.callbackMethodTimeout : 1000;
 
 				navigator.mediaDevices.getUserMedia({ video: { facingMode: "environment" } }).then(function(stream) {
 					video.srcObject = stream;
@@ -32,16 +36,11 @@ angular.module('svyqrcodeSvyqrcode', ['servoy']).directive('svyqrcodeSvyqrcode',
 				}
 
 				function tick() {
-					//    	      loadingMessage.innerText = "⌛ Loading video..."
 					if (video.readyState === video.HAVE_ENOUGH_DATA) {
-						//    	        loadingMessage.hidden = true;
 						canvasElement.hidden = false;
-						//    	        outputContainer.hidden = false;
 
 		    	        canvasElement.height = video.videoHeight;
 		    	        canvasElement.width = video.videoWidth;
-
-						//    	        canvasElement.width =
 
 						canvas.drawImage(video, 0, 0, canvasElement.width, canvasElement.height);
 						var imageData = canvas.getImageData(0, 0, canvasElement.width, canvasElement.height);
@@ -58,24 +57,21 @@ angular.module('svyqrcodeSvyqrcode', ['servoy']).directive('svyqrcodeSvyqrcode',
 							
 							var data = code.data;
 							
-							if (lastCodeDetected != data) {
-								lastCodeDetected = data;
-								if ($scope.model.dataProviderID) {
-									$scope.model.dataProviderID = lastCodeDetected;
-									$scope.svyServoyapi.apply('dataProviderID');
-								}
-								if ($scope.handlers.onCodeDetected) {
-									var jsEvent = $utils.createJSEvent({target: canvasElement}, 'codeDetected');
-									jsEvent.data = lastCodeDetected;
-									$scope.handlers.onCodeDetected(jsEvent, lastCodeDetected);
+							if (data && $scope.handlers.onCodeDetected) {
+								var now = new Date().getTime();
+								
+								if (($scope.model.dataProviderID != data) || (!methodLastFired || (now - methodLastFired > methodTimeout))) {
+									jsEvent.data = data;
+									jsEvent.timestamp = now;
+									$scope.handlers.onCodeDetected(jsEvent, data);
+									methodLastFired = now;
 								}
 							}
-							//    	          outputMessage.hidden = true;
-							//    	          outputData.parentElement.hidden = false;
-							//    	          outputData.innerText = code.data;
-						} else {
-							//    	          outputMessage.hidden = false;
-							//    	          outputData.parentElement.hidden = true;
+							
+							if (data && $scope.model.dataProviderID != data) {
+								$scope.model.dataProviderID = data;
+								$scope.svyServoyapi.apply('dataProviderID');
+							}							
 						}
 					}
 					requestAnimationFrame(tick);
