@@ -8,11 +8,10 @@ angular.module('svyqrcodeSvyqrcode', ['servoy']).directive('svyqrcodeSvyqrcode',
 				svyServoyapi: "="
 			},
 			controller: function($scope, $element, $attrs, $utils) {
-				//    	  var scanner = new QRScanner($element);
-
 				var video = document.createElement('video');
 				var canvasElement = $element.find('canvas')[0];
 				var canvas = canvasElement.getContext("2d");
+				var requestId = null;
 				
 				var methodLastFired;
 				var jsEvent = $utils.createJSEvent({target: canvasElement}, 'codeDetected');
@@ -23,8 +22,8 @@ angular.module('svyqrcodeSvyqrcode', ['servoy']).directive('svyqrcodeSvyqrcode',
 					video.srcObject = stream;
 					video.setAttribute("playsinline", true); // required to tell iOS safari we don't want fullscreen
 					video.play();
-					requestAnimationFrame(tick);
-				});
+					requestId = requestAnimationFrame(tick);
+				});			
 
 				function drawLine(begin, end, color) {
 					canvas.beginPath();
@@ -47,6 +46,7 @@ angular.module('svyqrcodeSvyqrcode', ['servoy']).directive('svyqrcodeSvyqrcode',
 						var code = jsQR(imageData.data, imageData.width, imageData.height, {
 								inversionAttempts: "dontInvert",
 							});
+						
 						if (code) {
 							if ($scope.model.showCodeFrame) {
 								drawLine(code.location.topLeftCorner, code.location.topRightCorner, $scope.model.codeFrameColor);
@@ -56,26 +56,30 @@ angular.module('svyqrcodeSvyqrcode', ['servoy']).directive('svyqrcodeSvyqrcode',
 							}
 							
 							var data = code.data;
-							
-							if (data && $scope.handlers.onCodeDetected) {
-								var now = new Date().getTime();
-								
-								if (($scope.model.dataProviderID != data) || (!methodLastFired || (now - methodLastFired > methodTimeout))) {
-									jsEvent.data = data;
-									jsEvent.timestamp = now;
-									$scope.handlers.onCodeDetected(jsEvent, data);
-									methodLastFired = now;
-								}
-							}
-							
 							if (data && $scope.model.dataProviderID != data) {
 								$scope.model.dataProviderID = data;
 								$scope.svyServoyapi.apply('dataProviderID');
+								
+								if ($scope.handlers.onCodeDetected) {
+									var now = new Date().getTime();
+									if (($scope.model.dataProviderID != data) || (!methodLastFired || (now - methodLastFired > methodTimeout))) {
+										jsEvent.data = data;
+										jsEvent.timestamp = now;
+										$scope.handlers.onCodeDetected(jsEvent, data);
+										methodLastFired = now;
+									}
+								}
 							}							
 						}
 					}
-					requestAnimationFrame(tick);
+					requestId = requestAnimationFrame(tick);
 				}
+				
+				$scope.$on("$destroy", function() {
+					if (requestId) {
+						window.cancelAnimationFrame(requestId);
+					}
+				 });
 			},
 			templateUrl: 'svyqrcode/svyqrcode/svyqrcode.html'
 		};

@@ -4,7 +4,7 @@
 	"version": 1,
 	"definition": "svyqrcode/svyqrcode/svyqrcode.js",
 	"libraries": [
-		{"name":"jsQR.js", "version":"1.0.0", "url":"svyqrcode/svyqrcode/lib/jsQR.js", "mimetype":"text/javascript"}
+		{"name":"jsQR.js", "version":"1.2.0", "url":"svyqrcode/svyqrcode/lib/jsQR.js", "mimetype":"text/javascript"}
 	],
 	"model":
 	{
