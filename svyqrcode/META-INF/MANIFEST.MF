@@ -1,7 +1,7 @@
 Manifest-Version: 1.0
 Bundle-SymbolicName: svyqrcode
 Bundle-Name: QR Code
-Bundle-Version: 1.1.0
+Bundle-Version: 1.1.1
 Package-Type: Web-Component
 
 Name: svyqrcode/svyqrcode.spec
