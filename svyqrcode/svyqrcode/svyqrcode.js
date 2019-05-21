@@ -13,12 +13,15 @@ angular.module('svyqrcodeSvyqrcode', ['servoy']).directive('svyqrcodeSvyqrcode',
 				var canvas = canvasElement.getContext("2d");
 				var requestId = null;
 				
+				var localStream;
+				
 				var methodLastFired;
 				var jsEvent = $utils.createJSEvent({target: canvasElement}, 'codeDetected');
 				
 				var methodTimeout = $scope.model.callbackMethodTimeout >= 0 ? $scope.model.callbackMethodTimeout : 1000;
 
 				navigator.mediaDevices.getUserMedia({ video: { facingMode: "environment" } }).then(function(stream) {
+					localStream = stream;
 					video.srcObject = stream;
 					video.setAttribute("playsinline", true); // required to tell iOS safari we don't want fullscreen
 					video.play();
@@ -78,6 +81,12 @@ angular.module('svyqrcodeSvyqrcode', ['servoy']).directive('svyqrcodeSvyqrcode',
 				$scope.$on("$destroy", function() {
 					if (requestId) {
 						window.cancelAnimationFrame(requestId);
+					}
+					if (localStream) {
+						var tracks = localStream.getTracks();
+						for (var t = 0; t < tracks.length; t++) {
+							tracks[t].stop();
+						}
 					}
 				 });
 			},
