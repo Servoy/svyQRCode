@@ -8,6 +8,11 @@ angular.module('svyqrcodeSvyqrcode', ['servoy']).directive('svyqrcodeSvyqrcode',
 				svyServoyapi: "="
 			},
 			controller: function($scope, $element, $attrs, $utils) {
+				if ($scope.svyServoyapi && $scope.svyServoyapi.isInDesigner && $scope.svyServoyapi.isInDesigner()) {
+					// don't touch the camera in the form designer — the template renders a placeholder
+					return;
+				}
+
 				var video = document.createElement('video');
 				var canvasElement = $element.find('canvas')[0];
 				var canvas = canvasElement.getContext("2d");
@@ -19,6 +24,10 @@ angular.module('svyqrcodeSvyqrcode', ['servoy']).directive('svyqrcodeSvyqrcode',
 				var jsEvent = $utils.createJSEvent({target: canvasElement}, 'codeDetected');
 				
 				var methodTimeout = $scope.model.callbackMethodTimeout >= 0 ? $scope.model.callbackMethodTimeout : 1000;
+
+				if (!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia) {
+					return;
+				}
 
 				navigator.mediaDevices.getUserMedia({ video: { facingMode: "environment" } }).then(function(stream) {
 					localStream = stream;

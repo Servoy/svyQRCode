@@ -1,0 +1,11 @@
+svyqrcode/node_modules/
+svyqrcode/dist/
+svyqrcode/out-tsc/
+svyqrcode/.angular/
+svyqrcode/svyqrcode.zip
+target/
+.opencode/node_modules/
+.opencode/index/
+.opencode/.gitignore
+.opencode/package.json
+.opencode/package-lock.json

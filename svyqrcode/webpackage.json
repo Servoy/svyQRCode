@@ -1,0 +1,13 @@
+{
+    "name": "svyqrcode",
+    "displayName": "QR Code",
+    "packageType": "Web-Component",
+    "description": "QR Code scanner (reads QR codes from the device camera) and QR Code generator (renders a QR code from a dataprovider value to a canvas).",
+    "sourceUrl": "https://github.com/Servoy/svyQRCode",
+    "releases": [
+        {"version": "1.0", "url": "https://github.com/Servoy/svyQRCode/releases/download/v1.0/svyqrcode.zip", "servoy-version": "8.4.0"},
+        {"version": "1.1.0", "url": "https://github.com/Servoy/svyQRCode/releases/download/v1.1.0/svyqrcode.zip", "servoy-version": "8.4.0"},
+        {"version": "1.1.1", "url": "https://github.com/Servoy/svyQRCode/releases/download/v1.1.1/svyqrcode.zip", "servoy-version": "8.4.0"},
+        {"version": "2026.6.0", "url": "https://github.com/Servoy/svyQRCode/releases/download/v2026.6.0/svyqrcode.zip", "servoy-version": "2026.6.0"}
+    ]
+}

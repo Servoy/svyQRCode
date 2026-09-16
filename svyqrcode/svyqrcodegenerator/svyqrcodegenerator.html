@@ -1,0 +1,9 @@
+<div id="{{::model.svyMarkupId}}"
+	style="width:100%; height:100%; position:relative; overflow:hidden; display:flex; align-items:center; justify-content:center;"
+	ng-style="{'background-color': model.backgroundColor || '#FFFFFF'}">
+	<canvas id="canvas-{{::model.svyMarkupId}}" style="max-width:100%; max-height:100%; display:block;"></canvas>
+	<div ng-if="svyServoyapi.isInDesigner()" style="font-family:monospace; font-size:14px; text-align:center; padding:8px;"
+		ng-style="{'color': model.foregroundColor || '#000000'}">
+		<div style="border:2px solid currentColor; padding:16px 20px; display:inline-block;">QR Code Generator</div>
+	</div>
+</div>

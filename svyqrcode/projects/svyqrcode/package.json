@@ -1,0 +1,19 @@
+{
+  "name": "@servoy/svyqrcode",
+  "version": "2026.6.0",
+  "peerDependencies": {
+    "@angular/common": "^21",
+    "@angular/core": "^21",
+    "@angular/forms": "^21"
+  },
+  "dependencies": {
+    "jsqr": "^1.4.0",
+    "qrcode": "^1.5.4",
+    "tslib": "*"
+  },
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Servoy/svyQRCode"
+  }
+}

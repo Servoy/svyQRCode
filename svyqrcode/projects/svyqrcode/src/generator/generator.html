@@ -1,0 +1,10 @@
+<div #element [id]="servoyApi.getMarkupId()"
+    [style.background]="backgroundColor()"
+    style="width:100%; height:100%; position:relative; overflow:hidden; display:flex; align-items:center; justify-content:center;">
+    <canvas #canvas style="max-width:100%; max-height:100%; display:block;"></canvas>
+    <div *ngIf="servoyApi.isInDesigner()"
+         [style.color]="foregroundColor()"
+         style="position:absolute; font-family:monospace; font-size:14px; text-align:center; padding:8px; pointer-events:none;">
+        <div style="border:2px solid currentColor; padding:16px 20px; display:inline-block;">QR Code Generator</div>
+    </div>
+</div>
