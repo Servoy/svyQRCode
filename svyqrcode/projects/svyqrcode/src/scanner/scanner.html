@@ -1,7 +1,9 @@
-<div #element [id]="servoyApi.getMarkupId()"
+<div #element [id]="servoyApi().getMarkupId()"
     style="width:100%; height:100%; position:relative; overflow:hidden; display:flex; align-items:center; justify-content:center; background:#000;">
     <canvas #canvas hidden style="max-width:100%; max-height:100%; display:block;"></canvas>
-    <div *ngIf="servoyApi.isInDesigner()" style="position:absolute; color:#FF3B58; font-family:monospace; font-size:14px; text-align:center; padding:8px; pointer-events:none;">
-        <div style="border:2px solid #FF3B58; padding:16px 20px; display:inline-block;">QR Code Scanner</div>
-    </div>
+    @if (servoyApi().isInDesigner()) {
+        <div style="position:absolute; color:#FF3B58; font-family:monospace; font-size:14px; text-align:center; padding:8px; pointer-events:none;">
+            <div style="border:2px solid #FF3B58; padding:16px 20px; display:inline-block;">QR Code Scanner</div>
+        </div>
+    }
 </div>

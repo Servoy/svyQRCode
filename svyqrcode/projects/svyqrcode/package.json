@@ -1,12 +1,8 @@
 {
   "name": "@servoy/svyqrcode",
-  "version": "2026.6.0",
-  "peerDependencies": {
-    "@angular/common": "^21",
-    "@angular/core": "^21",
-    "@angular/forms": "^21"
-  },
+  "version": "2026.9.0",
   "dependencies": {
+    "@types/qrcode": "^1.5.5",
     "jsqr": "^1.4.0",
     "qrcode": "^1.5.4",
     "tslib": "*"

@@ -16,7 +16,7 @@ implementations for older Servoy runtime compatibility.
 | Linting | ESLint 10.x with @angular-eslint + @typescript-eslint |
 | Module system | ES modules (moduleResolution: "bundler") |
 | Package name | @servoy/svyqrcode |
-| Version | 2026.6.0 |
+| Version | 2026.9.0 |
 
 ## Architecture: Dual-Layer Component Structure
 

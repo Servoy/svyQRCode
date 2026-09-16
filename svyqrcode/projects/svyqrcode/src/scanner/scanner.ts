@@ -1,12 +1,13 @@
-import { ChangeDetectionStrategy, Component, DOCUMENT, ElementRef, Inject, Renderer2, ChangeDetectorRef, input, model, viewChild } from '@angular/core';
-import { ServoyBaseComponent } from '@servoy/public';
+import { ChangeDetectionStrategy, Component, DOCUMENT, ElementRef, inject, input, model, viewChild } from '@angular/core';
+import { ServoyBaseComponent, ServoyPublicModule } from '@servoy/public';
 import jsQR from 'jsqr';
 
 @Component({
     selector: 'svyqrcode-svyqrcode',
     templateUrl: './scanner.html',
     changeDetection: ChangeDetectionStrategy.OnPush,
-    standalone: false
+    standalone: true,
+    imports: [ServoyPublicModule]
 })
 export class SvyQRCodeScanner extends ServoyBaseComponent<HTMLDivElement> {
 
@@ -18,18 +19,16 @@ export class SvyQRCodeScanner extends ServoyBaseComponent<HTMLDivElement> {
     readonly callbackMethodTimeout = input(1000);
     readonly onCodeDetected = input<((e: Event, code: string) => void) | undefined>(undefined);
 
+    private readonly doc = inject(DOCUMENT);
+
     private video: HTMLVideoElement | null = null;
     private localStream: MediaStream | null = null;
     private requestId: number | null = null;
     private methodLastFired: number | null = null;
 
-    constructor(renderer: Renderer2, cdRef: ChangeDetectorRef, @Inject(DOCUMENT) private doc: Document) {
-        super(renderer, cdRef);
-    }
-
     override svyOnInit() {
         super.svyOnInit();
-        if (this.servoyApi.isInDesigner()) {
+        if (this.servoyApi().isInDesigner()) {
             this.drawDesignerPlaceholder();
             return;
         }
@@ -110,7 +109,7 @@ export class SvyQRCodeScanner extends ServoyBaseComponent<HTMLDivElement> {
                     const data = code.data;
                     if (data && this.dataProviderID() !== data) {
                         this.dataProviderID.set(data);
-                        this.servoyApi.apply('dataProviderID', data);
+                        this.servoyApi().apply('dataProviderID', data);
                         this.fireCodeDetected(data);
                     }
                 }

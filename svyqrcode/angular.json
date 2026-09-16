@@ -18,16 +18,18 @@
           "configurations": {
             "production": {
               "tsConfig": "projects/svyqrcode/tsconfig.lib.prod.json"
+            },
+            "development": {
+              "tsConfig": "projects/svyqrcode/tsconfig.lib.json"
             }
           }
         },
         "test": {
-          "builder": "@angular/build:karma",
+          "builder": "@angular/build:unit-test",
           "options": {
-            "preserveSymlinks": true,
-            "main": "projects/svyqrcode/src/test.ts",
             "tsConfig": "projects/svyqrcode/tsconfig.spec.json",
-            "karmaConfig": "projects/svyqrcode/karma.conf.js"
+            "buildTarget": "@servoy/svyqrcode:build:development",
+            "include": ["**/*.spec.ts"]
           }
         },
         "lint": {
@@ -40,38 +42,31 @@
           }
         }
       }
+    },
+    "dummy": {
+      "projectType": "application",
+      "root": "projects/dummy",
+      "sourceRoot": "projects/dummy/src",
+      "prefix": "app",
+      "architect": {
+        "build": {
+          "builder": "@angular/build:application",
+          "options": {
+            "outputPath": "dist/dummy",
+            "index": "projects/dummy/src/index.html",
+            "browser": "projects/dummy/src/main.ts",
+            "polyfills": [],
+            "tsConfig": "projects/dummy/tsconfig.app.json",
+            "styles": ["projects/dummy/src/styles.css"],
+            "scripts": []
+          }
+        }
+      }
     }
   },
   "schematics": {
-    "@angular-eslint/schematics:application": {
-      "setParserOptionsProject": true
-    },
-    "@angular-eslint/schematics:library": {
-      "setParserOptionsProject": true
-    },
     "@schematics/angular:component": {
       "type": "component"
-    },
-    "@schematics/angular:directive": {
-      "type": "directive"
-    },
-    "@schematics/angular:service": {
-      "type": "service"
-    },
-    "@schematics/angular:guard": {
-      "typeSeparator": "."
-    },
-    "@schematics/angular:interceptor": {
-      "typeSeparator": "."
-    },
-    "@schematics/angular:module": {
-      "typeSeparator": "."
-    },
-    "@schematics/angular:pipe": {
-      "typeSeparator": "."
-    },
-    "@schematics/angular:resolver": {
-      "typeSeparator": "."
     }
   }
 }

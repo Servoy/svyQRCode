@@ -1,10 +1,10 @@
 Manifest-Version: 1.0
 NPM-PackageName: @servoy/svyqrcode
-NG2-Module: SvyQRCodeModule
+NG2-Components: SvyQRCodeScanner,SvyQRCodeGenerator
 Entry-Point: dist/servoy/svyqrcode
 Bundle-SymbolicName: svyqrcode
 Bundle-Name: QR Code
-Bundle-Version: 2026.6.0
+Bundle-Version: 2026.9.0
 Package-Type: Web-Component
 
 Name: svyqrcode/svyqrcode.spec

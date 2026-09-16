@@ -1,12 +1,13 @@
-import { ChangeDetectionStrategy, Component, ChangeDetectorRef, ElementRef, input, Renderer2, SimpleChanges, viewChild } from '@angular/core';
-import { ServoyBaseComponent } from '@servoy/public';
+import { ChangeDetectionStrategy, Component, ElementRef, input, SimpleChanges, viewChild } from '@angular/core';
+import { ServoyBaseComponent, ServoyPublicModule } from '@servoy/public';
 import QRCode, { QRCodeErrorCorrectionLevel } from 'qrcode';
 
 @Component({
     selector: 'svyqrcode-svyqrcodegenerator',
     templateUrl: './generator.html',
     changeDetection: ChangeDetectionStrategy.OnPush,
-    standalone: false
+    standalone: true,
+    imports: [ServoyPublicModule]
 })
 export class SvyQRCodeGenerator extends ServoyBaseComponent<HTMLDivElement> {
 
@@ -20,13 +21,9 @@ export class SvyQRCodeGenerator extends ServoyBaseComponent<HTMLDivElement> {
     readonly margin = input(4);
     readonly onError = input<((e: Event, message: string) => void) | undefined>(undefined);
 
-    constructor(renderer: Renderer2, cdRef: ChangeDetectorRef) {
-        super(renderer, cdRef);
-    }
-
     override svyOnInit() {
         super.svyOnInit();
-        if (this.servoyApi.isInDesigner()) {
+        if (this.servoyApi().isInDesigner()) {
             const canvas = this.canvasRef()?.nativeElement;
             if (canvas && !this.dataProviderID()) {
                 this.drawDesignerPlaceholder(canvas);
@@ -46,7 +43,7 @@ export class SvyQRCodeGenerator extends ServoyBaseComponent<HTMLDivElement> {
         }
         const value = this.dataProviderID();
         if (!value) {
-            if (this.servoyApi.isInDesigner()) {
+            if (this.servoyApi().isInDesigner()) {
                 this.drawDesignerPlaceholder(canvas);
             } else {
                 const ctx = canvas.getContext('2d');
