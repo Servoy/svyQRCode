@@ -4,7 +4,7 @@ NG2-Components: SvyQRCodeScanner,SvyQRCodeGenerator
 Entry-Point: dist/servoy/svyqrcode
 Bundle-SymbolicName: svyqrcode
 Bundle-Name: QR Code
-Bundle-Version: 2026.9.0
+Bundle-Version: 2026.9.1
 Package-Type: Web-Component
 
 Name: svyqrcode/svyqrcode.spec

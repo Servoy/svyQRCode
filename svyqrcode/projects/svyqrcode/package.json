@@ -1,6 +1,6 @@
 {
   "name": "@servoy/svyqrcode",
-  "version": "2026.9.0",
+  "version": "2026.9.1",
   "dependencies": {
     "@types/qrcode": "^1.5.5",
     "jsqr": "^1.4.0",
