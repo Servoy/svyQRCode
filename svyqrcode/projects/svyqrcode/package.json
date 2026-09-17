@@ -1,6 +1,6 @@
 {
   "name": "@servoy/svyqrcode",
-  "version": "2026.6.0",
+  "version": "2026.6.1",
   "peerDependencies": {
     "@angular/common": "^21",
     "@angular/core": "^21",
